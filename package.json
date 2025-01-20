@@ -3,6 +3,13 @@
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
+  "engines": {
+    "node": ">=22.4.0",
+    "yarn": "please-use-npm",
+    "pnpm": "please-use-npm",
+    "bun": "please-use-npm",
+    "npm": ">=10.8.1"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
