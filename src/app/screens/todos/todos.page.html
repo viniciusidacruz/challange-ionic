@@ -1,0 +1,22 @@
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar class="border-none min-h-20 items-center flex">
+      <ion-title class="text-slate-600 text-base underline">Tarefas</ion-title>
+      <ion-buttons slot="primary">
+        <ion-button class="bg-[#5577FF] rounded-lg">
+          <ion-icon name="add-outline" class="text-white"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="py-4">
+    <h1>Todos os Todos</h1>
+
+    <ul>
+      @for (todo of todos; track todo.id) {
+      <li class="text-slate-900">{{ todo.title }}</li>
+      }
+    </ul>
+  </div>
+</ion-content>
