@@ -1,0 +1,7 @@
+{
+  "name": "ionic-challenger",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
