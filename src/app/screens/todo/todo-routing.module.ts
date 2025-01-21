@@ -5,7 +5,7 @@ import { TodoPage } from './todo.page';
 
 const routes: Routes = [
   {
-    path: '/',
+    path: '',
     component: TodoPage,
   },
 ];

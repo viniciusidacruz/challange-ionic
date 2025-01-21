@@ -1,0 +1,14 @@
+<li class="p-3 rounded-xl border">
+  <div class="flex items-center gap-2 mb-4">
+    <ion-checkbox [checked]="todo.completed"></ion-checkbox>
+    <h3 class="font-medium text-sm">{{ todo.title }}</h3>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <div>
+      <ion-label class="text-xs">Criado em: </ion-label>
+
+      <ion-badge color="primary">{{ todo.id }}</ion-badge>
+    </div>
+  </div>
+</li>

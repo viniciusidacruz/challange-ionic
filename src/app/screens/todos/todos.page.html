@@ -11,12 +11,28 @@
   </ion-header>
 
   <div class="py-4">
-    <h1>Todos os Todos</h1>
+    @if (isLoading) {
+    <div class="flex justify-center">
+      <ion-spinner name="dots"></ion-spinner>
+    </div>
+    } @else {
+    <div>
+      <ion-searchbar
+        animated="true"
+        placeholder="Digite aqui..."
+        show-clear-button="focus"
+        [debounce]="1000"
+        (ionInput)="onChangeInput($event)"
+      ></ion-searchbar>
 
-    <ul>
-      @for (todo of todos; track todo.id) {
-      <li class="text-slate-900">{{ todo.title }}</li>
-      }
-    </ul>
+      <ul class="px-4 flex flex-col gap-2">
+        <todo-item
+          *ngFor="let todo of todos; trackBy: trackByTodoId"
+          [todo]="todo"
+        >
+        </todo-item>
+      </ul>
+    </div>
+    }
   </div>
 </ion-content>

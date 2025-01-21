@@ -7,6 +7,7 @@ import { TodoService } from 'src/app/services/todo.service';
   selector: 'app-todo',
   templateUrl: './todo.page.html',
   styleUrls: [],
+  standalone: false,
 })
 export class TodoPage implements OnInit {
   todoId: string | null = null;

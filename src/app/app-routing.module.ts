@@ -3,17 +3,22 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: 'todos',
     loadChildren: () =>
       import('./screens/todos/todos.module').then((m) => m.TodosPageModule),
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'todos',
     pathMatch: 'full',
   },
   {
     path: 'todo',
+    redirectTo: 'todos',
+    pathMatch: 'full',
+  },
+  {
+    path: 'todo/:id/details',
     loadChildren: () =>
       import('./screens/todo/todo.module').then((m) => m.TodoPageModule),
   },

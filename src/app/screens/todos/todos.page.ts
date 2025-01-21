@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TodoService } from '../../services/todo.service';
+
 import { Todo } from 'src/@types';
+
+import { TodoService } from '../../services/todo.service';
 
 @Component({
   selector: 'app-home',
@@ -10,10 +12,31 @@ import { Todo } from 'src/@types';
 })
 export class TodosPage implements OnInit {
   todos: Todo[] = [];
+  isLoading: boolean = true;
 
   constructor(private todoService: TodoService) {}
 
   ngOnInit() {
-    this.todoService.findMany().subscribe((todos) => (this.todos = todos));
+    this.todoService.findMany().subscribe({
+      next: (todos) => {
+        this.todos = todos;
+      },
+      error: (err) => {
+        console.error('Erro ao buscar os todos:', err);
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
+  }
+
+  trackByTodoId(index: number, todo: Todo): string {
+    return todo.id;
+  }
+
+  onChangeInput(event: Event) {
+    const target = event.target as HTMLIonSearchbarElement;
+    const query = target.value?.toLowerCase() || '';
+    this.todos = this.todos.filter((t) => t.title.includes(query));
   }
 }
