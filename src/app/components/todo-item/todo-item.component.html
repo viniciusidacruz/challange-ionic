@@ -1,14 +1,33 @@
 <li class="p-3 rounded-xl border">
-  <div class="flex items-center gap-2 mb-4">
-    <ion-checkbox [checked]="todo.completed"></ion-checkbox>
-    <h3 class="font-medium text-sm">{{ todo.title }}</h3>
+  <div class="mb-4 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <ion-checkbox [checked]="todo.completed"></ion-checkbox>
+      <h3 class="font-medium text-sm">{{ todo.title }}</h3>
+    </div>
+
+    <ion-button size="small" fill="clear">
+      <ion-icon
+        name="trash-outline"
+        slot="icon-only"
+        class="text-red-600"
+      ></ion-icon>
+    </ion-button>
   </div>
 
-  <div class="flex items-center gap-2">
-    <div>
-      <ion-label class="text-xs">Criado em: </ion-label>
+  <div class="flex items-center justify-between gap-2">
+    <div class="flex items-center gap-1">
+      <ion-label class="text-xs font-bold">Criado em: </ion-label>
 
-      <ion-badge color="primary">{{ todo.id }}</ion-badge>
+      <ion-badge>{{ todo.id }}</ion-badge>
     </div>
+
+    <ion-button
+      class="bg-[#5577FF] rounded-lg h-5"
+      [routerLink]="['/todo', todo.id, 'details']"
+      size="small"
+    >
+      Ver detalhes
+      <ion-icon name="chevron-forward-outline" class="text-white"></ion-icon>
+    </ion-button>
   </div>
 </li>

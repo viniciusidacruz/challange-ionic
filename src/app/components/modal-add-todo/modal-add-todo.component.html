@@ -1,0 +1,50 @@
+<ion-buttons slot="primary">
+  <ion-button class="bg-[#5577FF] rounded-lg" id="open-modal" expand="block">
+    <ion-icon name="add-outline" class="text-white"></ion-icon>
+  </ion-button>
+
+  <ion-modal trigger="open-modal">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="close()">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Criar Todo</ion-title>
+          <ion-buttons slot="end">
+            <ion-button [strong]="true">Criar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-item>
+          <ion-input
+            labelPlacement="floating"
+            class="outline-none border-none"
+            placeholder="Digite aqui..."
+          >
+            <div slot="label">
+              Título <ion-text color="danger">(Obrigatório)</ion-text>
+            </div>
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-textarea
+            labelPlacement="floating"
+            class="outline-none border-none"
+            placeholder="Digite sua descrição..."
+          >
+            <div slot="label">Descrição</div>
+          </ion-textarea>
+        </ion-item>
+
+        <ion-item>
+          <ion-checkbox>Tarefa completa?</ion-checkbox>
+        </ion-item>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-buttons>

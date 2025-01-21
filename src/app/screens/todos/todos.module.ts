@@ -7,9 +7,17 @@ import { TodoItemComponent } from 'src/app/components/todo-item/todo-item.compon
 
 import { TodosPage } from './todos.page';
 import { TodosPageRoutingModule } from './todos-routing.module';
+import { ModalAddTodoComponent } from 'src/app/components/modal-add-todo/modal-add-todo.component';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, TodosPageRoutingModule, TodoItemComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    TodosPageRoutingModule,
+    TodoItemComponent,
+    ModalAddTodoComponent,
+  ],
   declarations: [TodosPage],
 })
 export class TodosPageModule {}

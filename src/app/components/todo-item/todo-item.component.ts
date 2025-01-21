@@ -4,12 +4,13 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 
 import { Todo } from 'src/@types';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'todo-item',
   templateUrl: './todo-item.component.html',
   styleUrls: [],
-  imports: [CommonModule, FormsModule, IonicModule],
+  imports: [CommonModule, FormsModule, IonicModule, RouterModule],
 })
 export class TodoItemComponent implements OnInit {
   @Input() todo!: Todo;
