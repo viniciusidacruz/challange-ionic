@@ -10,7 +10,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <div class="py-4">
+  <div class="p-4">
     @if (isLoading) {
     <div class="flex justify-center">
       <ion-spinner name="dots"></ion-spinner>
@@ -26,23 +26,25 @@
     ></ion-searchbar>
 
     @if (!todos.length) {
-    <div class="flex justify-center">
-      <ion-text>Sem resultados</ion-text>
-    </div>
+    <ion-text>Sem resultados</ion-text>
     } @else {
 
-    <div>
-      <ul class="px-4 flex flex-col gap-2">
-        <todo-item
-          *ngFor="let todo of todos; trackBy: trackByTodoId"
-          [todo]="todo"
-          (deleteTodo)="onDeleteTodo($event)"
-          (fetchAllTodos)="fetchAllTodos()"
-          (onSelectTodo)="onSelectTodo(todo)"
-        >
-        </todo-item>
-      </ul>
-    </div>
+    <ion-list>
+      <todo-item
+        *ngFor="let todo of todos; trackBy: trackByTodoId"
+        [todo]="todo"
+        (deleteTodo)="onDeleteTodo($event)"
+        (fetchAllTodos)="fetchAllTodos()"
+        (onSelectTodo)="onSelectTodo(todo)"
+      >
+      </todo-item>
+    </ion-list>
     } }
   </div>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button id="open-modal" expand="block">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

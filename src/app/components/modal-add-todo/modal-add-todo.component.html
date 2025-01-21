@@ -1,97 +1,102 @@
-<ion-buttons slot="primary">
-  <ion-button class="bg-[#5577FF] rounded-lg" id="open-modal" expand="block">
-    <ion-icon name="add-outline" class="text-white"></ion-icon>
-  </ion-button>
+<ion-modal
+  trigger="open-modal"
+  handleBehavior="cycle"
+  cssClass="scrollable-modal"
+>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar class="flex items-center">
+        <ion-buttons slot="start">
+          <ion-button (click)="close()">
+            <ion-icon name="close-outline" color="primary"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title class="text-sm" color="primary"
+          >{{ todoSelected ? "Editar" : "Criar" }} Tarefa</ion-title
+        >
+        <ion-buttons slot="end" (click)="onSave()">
+          <ion-button [disabled]="isSubmitting" color="primary">{{
+            isSubmitting ? "Salvando ..." : "Salvar"
+          }}</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <form action="" [formGroup]="payload" class="flex-1 py-5">
+      <ion-grid>
+        <ion-row class="">
+          <ion-col size="12">
+            <ion-label class="text-xs">
+              Finalizar em: <ion-text color="danger">*</ion-text>
+            </ion-label>
+          </ion-col>
 
-  <ion-modal trigger="open-modal">
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-button (click)="close()">
-              <ion-icon name="close-outline"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-          <ion-title>{{ todoSelected ? "Editar" : "Criar" }} Tarefa</ion-title>
-          <ion-buttons slot="end" (click)="onSave()">
-            <ion-button [strong]="true" [disabled]="isSubmitting">{{
-              isSubmitting ? "Salvando ..." : "Salvar"
-            }}</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <form
-        action=""
-        [formGroup]="payload"
-        class="flex-1 p-5 flex flex-col gap-6"
-      >
-        <div class="flex flex-col gap-2">
-          <label class="text-xs"
-            >Finalizar em: <ion-text color="danger">*</ion-text></label
-          >
+          <ion-col size="12">
+            <ion-datetime
+              formControlName="finishedAt"
+              presentation="date-time"
+              class="rounded-lg border border-slate-300"
+            ></ion-datetime>
+          </ion-col>
 
-          <input
-            type="datetime-local"
-            formControlName="finishedAt"
-            required
-            class="outline-none border rounded-lg border-slate-300"
-          />
+          <ion-col size="12">
+            <small class="text-red-600">
+              <ng-container
+                *ngIf="
+                  payload.get('finishedAt')?.hasError('required') &&
+                  (payload.get('finishedAt')?.touched ||
+                    payload.get('finishedAt')?.dirty)
+                "
+              >
+                Campo obrigatório
+              </ng-container>
+            </small>
+          </ion-col>
+        </ion-row>
 
-          <small class="text-red-600">
-            <ng-container
-              *ngIf="
-                payload.get('finishedAt')?.hasError('required') &&
-                (payload.get('finishedAt')?.touched ||
-                  payload.get('finishedAt')?.dirty)
-              "
-            >
-              Campo obrigatório
-            </ng-container>
-          </small>
-        </div>
+        <ion-row class="mt-4">
+          <ion-col size="auto">
+            <label class="text-xs mr-5">
+              Título <ion-text color="danger">*</ion-text>
+            </label>
+          </ion-col>
+          <ion-col>
+            <input
+              type="text"
+              formControlName="title"
+              class="outline-none border rounded-lg border-slate-300 w-full"
+            />
+          </ion-col>
+        </ion-row>
 
-        <div class="flex flex-col gap-2">
-          <label class="text-xs">
-            Título <ion-text color="danger">*</ion-text>
-          </label>
+        @if (payload.get('title')?.hasError('required') &&
+        (payload.get('title')?.touched || payload.get('title')?.dirty) ) {
+        <small class="text-red-600"> Campo obrigatório </small>
+        }
 
-          <input
-            type="text"
-            formControlName="title"
-            class="outline-none border rounded-lg border-slate-300"
-          />
+        <ion-row class="mt-4">
+          <ion-col size="auto">
+            <label class="text-xs">
+              Descrição <ion-text color="danger">*</ion-text>
+            </label>
+          </ion-col>
+          <ion-col>
+            <textarea
+              formControlName="description"
+              class="outline-none border rounded-lg border-slate-300 w-full"
+            ></textarea>
+          </ion-col>
+        </ion-row>
 
-          <small class="text-red-600">
-            <ng-container
-              *ngIf="
-                payload.get('title')?.hasError('required') &&
-                (payload.get('title')?.touched || payload.get('title')?.dirty)
-              "
-            >
-              Campo obrigatório
-            </ng-container>
-          </small>
-        </div>
-
-        <div class="flex flex-col gap-2">
-          <label class="text-xs"> Descrição </label>
-
-          <textarea
-            formControlName="description"
-            class="outline-none border rounded-lg border-slate-300"
-          ></textarea>
-        </div>
-
-        <div class="flex flex-col gap-2">
+        <ion-row>
           <ion-checkbox formControlName="completed"
             >Tarefa completa?</ion-checkbox
           >
-        </div>
+        </ion-row>
 
         @if (errorMessage) {
         <small class="text-red-500">{{ errorMessage }}</small>
         }
-      </form>
-    </ng-template>
-  </ion-modal>
-</ion-buttons>
+      </ion-grid>
+    </form>
+  </ng-template>
+</ion-modal>

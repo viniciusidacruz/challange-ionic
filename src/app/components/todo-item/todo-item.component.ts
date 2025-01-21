@@ -23,7 +23,7 @@ interface CheckboxCustomEvent<T = any> extends CustomEvent {
 @Component({
   selector: 'todo-item',
   templateUrl: './todo-item.component.html',
-  styleUrls: [],
+  styleUrls: ['./todo-item.component.scss'],
   imports: [CommonModule, FormsModule, IonicModule, RouterModule],
 })
 export class TodoItemComponent implements OnInit {
