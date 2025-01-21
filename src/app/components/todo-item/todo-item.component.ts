@@ -1,5 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  OnInit,
+  LOCALE_ID,
+  Inject,
+  Output,
+  EventEmitter,
+} from '@angular/core';
+import { CommonModule, formatDate } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 
@@ -13,9 +21,21 @@ import { RouterModule } from '@angular/router';
   imports: [CommonModule, FormsModule, IonicModule, RouterModule],
 })
 export class TodoItemComponent implements OnInit {
+  finishedAt: string | null = null;
   @Input() todo!: Todo;
+  @Output() deleteTodo = new EventEmitter<string>();
 
-  constructor() {}
+  constructor(@Inject(LOCALE_ID) public locale: string) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.finishedAt = formatDate(
+      this.todo.finishedAt,
+      'dd/MM/yyyy',
+      this.locale
+    );
+  }
+
+  onDelete() {
+    this.deleteTodo.emit(this.todo.id);
+  }
 }

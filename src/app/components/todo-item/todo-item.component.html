@@ -5,7 +5,7 @@
       <h3 class="font-medium text-sm">{{ todo.title }}</h3>
     </div>
 
-    <ion-button size="small" fill="clear">
+    <ion-button size="small" fill="clear" (click)="onDelete()">
       <ion-icon
         name="trash-outline"
         slot="icon-only"
@@ -14,11 +14,15 @@
     </ion-button>
   </div>
 
+  @if(todo.description) {
+  <ion-text class="text-sm">{{ todo.description }}</ion-text>
+  }
+
   <div class="flex items-center justify-between gap-2">
     <div class="flex items-center gap-1">
-      <ion-label class="text-xs font-bold">Criado em: </ion-label>
+      <ion-label class="text-xs font-bold">Finalização em: </ion-label>
 
-      <ion-badge>{{ todo.id }}</ion-badge>
+      <ion-chip>{{ finishedAt }}</ion-chip>
     </div>
 
     <ion-button

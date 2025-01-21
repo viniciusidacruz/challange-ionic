@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class TodoService {
+  baseUrl = 'https://challenge-ionic-api.onrender.com';
   constructor(private http: HttpClient) {}
 
   /**
@@ -19,27 +20,22 @@ export class TodoService {
    * <CustomButton variant='danger'>Danger</CustomButton>
    */
   findMany(): Observable<Todo[]> {
-    return this.http.get<Todo[]>('https://jsonplaceholder.typicode.com/todos');
+    return this.http.get<Todo[]>(`${this.baseUrl}/todos`);
   }
 
   findById(id: string): Observable<Todo> {
-    return this.http.get<Todo>(
-      `https://jsonplaceholder.typicode.com/todos/${id}`
-    );
+    return this.http.get<Todo>(`${this.baseUrl}/todo/${id}/details`);
   }
 
   create(todo: CreateInput) {
-    return this.http.post('https://jsonplaceholder.typicode.com/todos', todo);
+    return this.http.post(`${this.baseUrl}/todos/create`, todo);
   }
 
-  update(todo: UpdateInput) {
-    return this.http.put(
-      `https://jsonplaceholder.typicode.com/todos/${todo.id}`,
-      todo
-    );
+  update({ id, ...todo }: UpdateInput) {
+    return this.http.put(`${this.baseUrl}/todo/${id}/update`, { ...todo });
   }
 
-  delete(id: number) {
-    return this.http.delete(`https://jsonplaceholder.typicode.com/todos/${id}`);
+  delete(id: string) {
+    return this.http.delete(`${this.baseUrl}/todo/${id}/delete`);
   }
 }

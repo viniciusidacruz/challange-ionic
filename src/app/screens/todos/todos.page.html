@@ -25,6 +25,7 @@
         <todo-item
           *ngFor="let todo of todos; trackBy: trackByTodoId"
           [todo]="todo"
+          (deleteTodo)="onDeleteTodo($event)"
         >
         </todo-item>
       </ul>

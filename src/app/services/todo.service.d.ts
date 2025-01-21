@@ -1,9 +1,10 @@
 import { Todo } from 'src/@types';
 
 export interface CreateInput {
-  userId: number;
-  title: string;
   completed: boolean;
+  description: string;
+  finishedAt: string;
+  title: string;
 }
 
 export type UpdateInput = Todo;
