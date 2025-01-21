@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { Todo } from 'src/@types';
 
 import { TodoService } from '../../services/todo.service';
+import { ModalAddTodoComponent } from 'src/app/components/modal-add-todo/modal-add-todo.component';
 
 @Component({
   selector: 'app-home',
@@ -12,8 +13,14 @@ import { TodoService } from '../../services/todo.service';
 })
 export class TodosPage implements OnInit {
   todos: Todo[] = [];
-  error: String | null = null;
+  query: string = '';
   isLoading: boolean = true;
+  error: String | null = null;
+  todoSelected: Todo | null = null;
+
+  @ViewChild(ModalAddTodoComponent) modalAddTodo:
+    | ModalAddTodoComponent
+    | undefined;
 
   constructor(private todoService: TodoService) {}
 
@@ -21,9 +28,9 @@ export class TodosPage implements OnInit {
     this.fetchAllTodos();
   }
 
-  fetchAllTodos() {
+  fetchAllTodos(query?: string) {
     this.isLoading = true;
-    this.todoService.findMany().subscribe({
+    this.todoService.findMany(query).subscribe({
       next: (todos) => {
         this.todos = todos;
       },
@@ -42,8 +49,9 @@ export class TodosPage implements OnInit {
 
   onChangeInput(event: Event) {
     const target = event.target as HTMLIonSearchbarElement;
-    const query = target.value?.toLowerCase() || '';
-    this.todos = this.todos.filter((t) => t.title.includes(query));
+
+    this.query = target.value || '';
+    this.fetchAllTodos(this.query);
   }
 
   onDeleteTodo(todoId: string) {
@@ -53,5 +61,14 @@ export class TodosPage implements OnInit {
         console.log('Err: ', err);
       },
     });
+  }
+
+  onSelectTodo(todo: Todo) {
+    this.todoSelected = todo;
+    console.log({
+      param: todo,
+      selected: this.todoSelected,
+    });
+    this.modalAddTodo?.open();
   }
 }

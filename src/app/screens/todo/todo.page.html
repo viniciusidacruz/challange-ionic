@@ -22,7 +22,24 @@
       <ion-breadcrumb>{{ todo.title }}</ion-breadcrumb>
     </ion-breadcrumbs>
 
-    <h1>{{ todo.title }}</h1>
+    <div class="flex flex-col gap-4">
+      <ion-item class="text-sm">
+        <span class="font-semibold">Título da tarefa</span>: {{ todo.title }}
+      </ion-item>
+
+      <ion-item class="text-sm">
+        <span class="font-semibold">Descrição da tarefa</span>: {{
+        todo.description || '-' }}
+      </ion-item>
+
+      <ion-item class="text-sm">
+        <span class="font-semibold">Finalizada em</span>: {{ finishedAt}}
+      </ion-item>
+      <ion-item class="text-sm">
+        <span class="font-semibold">Está completo?</span>
+        <span class="ml-1">{{ todo.completed ? ' Sim' : ' Não' }}</span>
+      </ion-item>
+    </div>
   </div>
   } @else {
   <div>

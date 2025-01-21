@@ -1,5 +1,3 @@
-import { Todo } from 'src/@types';
-
 export interface CreateInput {
   completed: boolean;
   description: string;
@@ -7,4 +5,6 @@ export interface CreateInput {
   title: string;
 }
 
-export type UpdateInput = Todo;
+export type UpdateInput = CreateInput & {
+  id: string;
+};

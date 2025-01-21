@@ -2,7 +2,11 @@
   <ion-header>
     <ion-toolbar class="border-none min-h-20 items-center flex">
       <ion-title class="text-slate-600 text-base underline">Tarefas</ion-title>
-      <modal-add-todo></modal-add-todo>
+      <modal-add-todo
+        (fetchAllTodos)="fetchAllTodos()"
+        [todoSelected]="todoSelected"
+        #modalAddTodo
+      ></modal-add-todo>
     </ion-toolbar>
   </ion-header>
 
@@ -12,24 +16,33 @@
       <ion-spinner name="dots"></ion-spinner>
     </div>
     } @else {
-    <div>
-      <ion-searchbar
-        animated="true"
-        placeholder="Digite aqui..."
-        show-clear-button="focus"
-        [debounce]="1000"
-        (ionInput)="onChangeInput($event)"
-      ></ion-searchbar>
+    <ion-searchbar
+      animated="true"
+      placeholder="Digite aqui..."
+      show-clear-button="focus"
+      [value]="query"
+      [debounce]="1000"
+      (ionInput)="onChangeInput($event)"
+    ></ion-searchbar>
 
+    @if (!todos.length) {
+    <div class="flex justify-center">
+      <ion-text>Sem resultados</ion-text>
+    </div>
+    } @else {
+
+    <div>
       <ul class="px-4 flex flex-col gap-2">
         <todo-item
           *ngFor="let todo of todos; trackBy: trackByTodoId"
           [todo]="todo"
           (deleteTodo)="onDeleteTodo($event)"
+          (fetchAllTodos)="fetchAllTodos()"
+          (onSelectTodo)="onSelectTodo(todo)"
         >
         </todo-item>
       </ul>
     </div>
-    }
+    } }
   </div>
 </ion-content>

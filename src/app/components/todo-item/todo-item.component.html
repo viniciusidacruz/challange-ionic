@@ -1,17 +1,30 @@
 <li class="p-3 rounded-xl border">
   <div class="mb-4 flex items-center justify-between">
     <div class="flex items-center gap-2">
-      <ion-checkbox [checked]="todo.completed"></ion-checkbox>
+      <ion-checkbox
+        [checked]="todo.completed"
+        (ionChange)="onUpdateComplete($event)"
+      ></ion-checkbox>
       <h3 class="font-medium text-sm">{{ todo.title }}</h3>
     </div>
 
-    <ion-button size="small" fill="clear" (click)="onDelete()">
-      <ion-icon
-        name="trash-outline"
-        slot="icon-only"
-        class="text-red-600"
-      ></ion-icon>
-    </ion-button>
+    <div>
+      <ion-button size="small" fill="clear" (click)="onEdit()">
+        <ion-icon
+          name="create-outline"
+          slot="icon-only"
+          class="text-orange-500"
+        ></ion-icon>
+      </ion-button>
+
+      <ion-button size="small" fill="clear" (click)="onDelete()">
+        <ion-icon
+          name="trash-outline"
+          slot="icon-only"
+          class="text-red-600"
+        ></ion-icon>
+      </ion-button>
+    </div>
   </div>
 
   @if(todo.description) {

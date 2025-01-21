@@ -12,39 +12,86 @@
               <ion-icon name="close-outline"></ion-icon>
             </ion-button>
           </ion-buttons>
-          <ion-title>Criar Todo</ion-title>
-          <ion-buttons slot="end">
-            <ion-button [strong]="true">Criar</ion-button>
+          <ion-title>{{ todoSelected ? "Editar" : "Criar" }} Tarefa</ion-title>
+          <ion-buttons slot="end" (click)="onSave()">
+            <ion-button [strong]="true" [disabled]="isSubmitting">{{
+              isSubmitting ? "Salvando ..." : "Salvar"
+            }}</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
-      <ion-content>
-        <ion-item>
-          <ion-input
-            labelPlacement="floating"
-            class="outline-none border-none"
-            placeholder="Digite aqui..."
+      <form
+        action=""
+        [formGroup]="payload"
+        class="flex-1 p-5 flex flex-col gap-6"
+      >
+        <div class="flex flex-col gap-2">
+          <label class="text-xs"
+            >Finalizar em: <ion-text color="danger">*</ion-text></label
           >
-            <div slot="label">
-              Título <ion-text color="danger">(Obrigatório)</ion-text>
-            </div>
-          </ion-input>
-        </ion-item>
 
-        <ion-item>
-          <ion-textarea
-            labelPlacement="floating"
-            class="outline-none border-none"
-            placeholder="Digite sua descrição..."
+          <input
+            type="datetime-local"
+            formControlName="finishedAt"
+            required
+            class="outline-none border rounded-lg border-slate-300"
+          />
+
+          <small class="text-red-600">
+            <ng-container
+              *ngIf="
+                payload.get('finishedAt')?.hasError('required') &&
+                (payload.get('finishedAt')?.touched ||
+                  payload.get('finishedAt')?.dirty)
+              "
+            >
+              Campo obrigatório
+            </ng-container>
+          </small>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label class="text-xs">
+            Título <ion-text color="danger">*</ion-text>
+          </label>
+
+          <input
+            type="text"
+            formControlName="title"
+            class="outline-none border rounded-lg border-slate-300"
+          />
+
+          <small class="text-red-600">
+            <ng-container
+              *ngIf="
+                payload.get('title')?.hasError('required') &&
+                (payload.get('title')?.touched || payload.get('title')?.dirty)
+              "
+            >
+              Campo obrigatório
+            </ng-container>
+          </small>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label class="text-xs"> Descrição </label>
+
+          <textarea
+            formControlName="description"
+            class="outline-none border rounded-lg border-slate-300"
+          ></textarea>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <ion-checkbox formControlName="completed"
+            >Tarefa completa?</ion-checkbox
           >
-            <div slot="label">Descrição</div>
-          </ion-textarea>
-        </ion-item>
+        </div>
 
-        <ion-item>
-          <ion-checkbox>Tarefa completa?</ion-checkbox>
-        </ion-item>
-      </ion-content>
+        @if (errorMessage) {
+        <small class="text-red-500">{{ errorMessage }}</small>
+        }
+      </form>
     </ng-template>
   </ion-modal>
 </ion-buttons>
