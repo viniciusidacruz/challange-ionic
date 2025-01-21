@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
-import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
+
 import { Todo } from 'src/@types';
 import { TodoService } from 'src/app/services/todo.service';
 

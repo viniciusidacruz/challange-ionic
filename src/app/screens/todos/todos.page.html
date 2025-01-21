@@ -17,7 +17,6 @@
     </div>
     } @else {
     <ion-searchbar
-      animated="true"
       placeholder="Digite aqui..."
       show-clear-button="focus"
       [value]="query"
@@ -25,11 +24,8 @@
       (ionInput)="onChangeInput($event)"
     ></ion-searchbar>
 
-    @if (!todos.length) {
-    <ion-text>Sem resultados</ion-text>
-    } @else {
-
     <ion-list>
+      @for (todo of todos; track todo.id) {
       <todo-item
         *ngFor="let todo of todos; trackBy: trackByTodoId"
         [todo]="todo"
@@ -38,8 +34,12 @@
         (onSelectTodo)="onSelectTodo(todo)"
       >
       </todo-item>
+      } @empty {
+      <ion-item lines="none">Sem resultado!</ion-item>
+      }
     </ion-list>
-    } }
+
+    }
   </div>
 
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">

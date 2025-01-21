@@ -1,19 +1,21 @@
 import {
-  Component,
-  EventEmitter,
   Input,
-  OnChanges,
   Output,
-  SimpleChanges,
+  Component,
   ViewChild,
+  OnChanges,
+  EventEmitter,
+  SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule, IonModal } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { TodoService } from 'src/app/services/todo.service';
 import { Todo } from 'src/@types';
+import { TodoService } from 'src/app/services/todo.service';
+
+import { buildPayload } from './modal-add-todo.component-factories';
 
 @Component({
   selector: 'modal-add-todo',
@@ -25,7 +27,7 @@ export class ModalAddTodoComponent implements OnChanges {
   isSubmitting: boolean = false;
   errorMessage: string | null = null;
 
-  @ViewChild(IonModal) modal!: IonModal;
+  @ViewChild(IonModal, { static: false }) modal!: IonModal;
   @Output() fetchAllTodos = new EventEmitter();
   @Input() todoSelected: Todo | null = null;
 
@@ -40,14 +42,16 @@ export class ModalAddTodoComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['todoSelected'] && changes['todoSelected'].currentValue) {
-      const formattedFinishedAt = this.todoSelected?.finishedAt
-        ? new Date(this.todoSelected.finishedAt).toISOString().slice(0, 16)
+      const todo = changes['todoSelected'].currentValue as Todo;
+
+      const formattedFinishedAt = todo.finishedAt
+        ? new Date(todo.finishedAt).toISOString().slice(0, 16)
         : '';
 
       this.payload.patchValue({
-        title: this.todoSelected?.title || '',
-        description: this.todoSelected?.description || '',
-        completed: this.todoSelected?.completed || false,
+        title: todo.title || '',
+        description: todo.description || '',
+        completed: todo.completed || false,
         finishedAt: formattedFinishedAt,
       });
     }
@@ -57,12 +61,7 @@ export class ModalAddTodoComponent implements OnChanges {
     if (this.payload.valid) {
       this.isSubmitting = true;
 
-      const todoData = {
-        title: this.payload.value.title!,
-        description: this.payload.value.description || '',
-        completed: this.payload.value.completed!,
-        finishedAt: new Date(this.payload.value.finishedAt!).toISOString(),
-      };
+      const todoData = buildPayload(this.payload);
 
       const request$ = this.todoSelected
         ? this.todoService.update({ id: this.todoSelected.id, ...todoData })
@@ -86,7 +85,7 @@ export class ModalAddTodoComponent implements OnChanges {
   }
 
   onError(err: any) {
-    this.errorMessage = err.error.message;
+    this.errorMessage = err.error?.message || 'Ocorreu um erro inesperado.';
   }
 
   markAllAsTouched() {

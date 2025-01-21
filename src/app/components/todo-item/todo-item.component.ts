@@ -55,7 +55,7 @@ export class TodoItemComponent implements OnInit {
   }
 
   onUpdateComplete(event: CheckboxCustomEvent) {
-    this.todo.completed = !this.todo.completed;
+    this.todo.completed = event.detail.checked;
     this.todoService.update({ ...this.todo }).subscribe({
       next: () => this.fetchAllTodos.emit(),
       error: (err) =>

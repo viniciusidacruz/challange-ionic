@@ -1,16 +1,15 @@
 <ion-item class="rounded-xl border mb-4" lines="none">
   <ion-grid>
-    <ion-row class="items-center flex-wrap gap-4 md:flex-nowrap md:gap-0">
-      <ion-col class="flex items-center gap-2 md:flex-[2]">
+    <ion-row class="items-center gap-4">
+      <ion-col class="flex items-center gap-2" size="auto">
         <ion-checkbox
           [checked]="todo.completed"
           (ionChange)="onUpdateComplete($event)"
-          slot="start"
         ></ion-checkbox>
         <ion-text class="font-medium text-sm">{{ todo.title }}</ion-text>
       </ion-col>
 
-      <ion-col class="flex justify-end gap-2 md:flex-[1]" size="auto">
+      <ion-col class="flex justify-end gap-2">
         <ion-button size="small" fill="clear" (click)="onEdit()">
           <ion-icon
             name="create-outline"
