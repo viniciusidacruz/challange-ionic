@@ -17,6 +17,11 @@
 
   @if (todo) {
   <div>
+    <ion-breadcrumbs class="mb-4">
+      <ion-breadcrumb [routerLink]="['/todos']">Página Inicial</ion-breadcrumb>
+      <ion-breadcrumb>{{ todo.title }}</ion-breadcrumb>
+    </ion-breadcrumbs>
+
     <h1>{{ todo.title }}</h1>
   </div>
   } @else {
