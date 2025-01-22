@@ -1,0 +1,54 @@
+<ion-content>
+  <div class="h-full flex items-center justify-center">
+    <form action="" [formGroup]="payload" class="flex-1 py-5">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title color="primary">Entrar</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-item class="px-0">
+            <ion-input
+              labelPlacement="floating"
+              label="E-mail:"
+              placeholder="Enter text"
+              type="email"
+              class="border-none"
+              formControlName="email"
+            ></ion-input>
+          </ion-item>
+          @if(payload.get('email')?.hasError('required') &&
+          (payload.get('email')?.touched || payload.get('email')?.dirty)) {
+          <ion-label class="text-red-600"> Campo obrigatório </ion-label>
+          }
+
+          <ion-item class="mt-4">
+            <ion-input
+              labelPlacement="floating"
+              label="Senha:"
+              type="password"
+              class="border-none"
+              formControlName="password"
+            ></ion-input>
+          </ion-item>
+          @if(payload.get('password')?.hasError('required') &&
+          (payload.get('password')?.touched || payload.get('password')?.dirty))
+          {
+          <ion-label class="text-red-600"> Campo obrigatório </ion-label>
+          }
+
+          <ion-button
+            class="mt-4 w-full"
+            [disabled]="!payload.valid"
+            (click)="onSave()"
+            >Entrar</ion-button
+          >
+
+          @if(errorMessage) {
+          <ion-label class="text-red-600 mt-4">{{ errorMessage }}</ion-label>
+          }
+        </ion-card-content>
+      </ion-card>
+    </form>
+  </div>
+</ion-content>

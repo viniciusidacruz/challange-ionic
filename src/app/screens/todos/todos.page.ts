@@ -65,10 +65,6 @@ export class TodosPage implements OnInit {
 
   onSelectTodo(todo: Todo) {
     this.todoSelected = todo;
-    console.log({
-      param: todo,
-      selected: this.todoSelected,
-    });
     this.modalAddTodo?.open();
   }
 }
